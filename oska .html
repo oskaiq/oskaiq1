@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini App بث المباريات</title>
+</head>
+<body>
+    <h2>قائمة المباريات</h2>
+    <ul id="channels"></ul>
+
+    <script>
+        const channels = [
+            {name: "قناة الرياضية", url: "http://ugeen.live:8080/Ugeen_VIP8Z9E57/jueFRN.m3u8"},
+            {name: "قناة أخرى", url: "http://example.com/live2.m3u8"}
+        ];
+
+        const list = document.getElementById("channels");
+        channels.forEach(c => {
+            const li = document.createElement("li");
+            const btn = document.createElement("button");
+            btn.innerText = c.name;
+            btn.onclick = () => {
+                // فتح الرابط داخل Mini App
+                window.open(c.url, "_blank");
+            };
+            li.appendChild(btn);
+            list.appendChild(li);
+        });
+    </script>
+</body>
+</html>
