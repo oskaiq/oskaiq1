@@ -2,51 +2,77 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>مشغل بث M3U8</title>
+  <title>مشغل M3U8 عام</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background-color: #000;
+      background-color: #111;
       color: #fff;
       font-family: sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
     }
+    input, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 80%;
+      max-width: 600px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
     video {
       width: 90%;
       max-width: 900px;
-      height: auto;
-      margin-top: 40px;
-      border: 3px solid #555;
-      border-radius: 10px;
+      margin-top: 20px;
+      border: 2px solid #555;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
-  <h2>🎥 مشغل بث M3U8 مباشر</h2>
+  <h2>🎥 مشغل M3U8 عام</h2>
+  <input type="text" id="streamURL" placeholder="ضع رابط M3U8 هنا">
+  <br>
+  <button onclick="playStream()">تشغيل البث</button>
+  <br>
   <video id="video" controls autoplay></video>
 
-  <!-- مكتبة HLS.js -->
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     const video = document.getElementById('video');
-    const streamURL = 'http://front-main.eagle-4k.me:80/live/9fshhuw2z7/54hw7lwwb1/196816.m3u8';
 
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(streamURL);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function() {
-        video.play();
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = streamURL;
-      video.addEventListener('loadedmetadata', function() {
-        video.play();
-      });
-    } else {
-      alert('متصفحك لا يدعم تشغيل هذا النوع من البث');
+    function playStream() {
+      const url = document.getElementById('streamURL').value.trim();
+      if (!url) {
+        alert("http://front-main.eagle-4k.me:80/live/9fshhuw2z7/54hw7lwwb1/196274.m3u8");
+        return;
+      }
+
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      } else {
+        alert('متصفحك لا يدعم تشغيل هذا النوع من البث');
+      }
     }
   </script>
 </body>
