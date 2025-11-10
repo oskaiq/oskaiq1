@@ -1,54 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <title>مشغل المباريات</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body { font-family: Arial; text-align: center; background: #111; color: #fff; }
-        video { width: 90%; height: auto; margin-top: 20px; border: 2px solid #444; border-radius: 10px; }
-        h2 { margin-top: 20px; }
-        select { margin-top: 20px; padding: 5px; font-size: 16px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>مشغل بث M3U8</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    video {
+      width: 90%;
+      max-width: 900px;
+      height: auto;
+      margin-top: 40px;
+      border: 3px solid #555;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h2>مشغل المباريات</h2>
+  <h2>🎥 مشغل بث M3U8 مباشر</h2>
+  <video id="video" controls autoplay></video>
 
-    <select id="channelSelect">
-        <option value="http://ugeen.live:8080/Ugeen_VIP8Z9E57/jueFRN/3221">قناة 1</option>
-        <option value="http://example.com/stream2.m3u8">قناة 2</option>
-    </select>
+  <!-- مكتبة HLS.js -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('video');
+    const streamURL = 'http://front-main.eagle-4k.me:80/live/9fshhuw2z7/54hw7lwwb1/196816.m3u8';
 
-    <video id="player" controls autoplay></video>
-
-    <script>
-        const video = document.getElementById('player');
-        const select = document.getElementById('channelSelect');
-
-        function loadStream(url) {
-            if(Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(url);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play();
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = url;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play();
-                });
-            } else {
-                alert("متصفحك لا يدعم تشغيل البث المباشر!");
-            }
-        }
-
-        // تحميل البث الافتراضي عند فتح الصفحة
-        loadStream(select.value);
-
-        // تغيير البث عند اختيار قناة أخرى
-        select.addEventListener('change', function() {
-            loadStream(this.value);
-        });
-    </script>
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(streamURL);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = streamURL;
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
+    } else {
+      alert('متصفحك لا يدعم تشغيل هذا النوع من البث');
+    }
+  </script>
 </body>
 </html>
